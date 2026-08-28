@@ -1,1 +1,7 @@
-export default function FillgenApp() { return <div>Fillgen placeholder</div>; }
+"use client";
+
+import FillgenTool from "./components/FillGenTool";
+
+export default function FillgenApp() {
+	return <FillgenTool />;
+}
