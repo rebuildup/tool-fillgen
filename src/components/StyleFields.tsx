@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { type ChangeEvent, useId } from "react";
 
 type ColorFieldProps = {
 	label: string;
@@ -7,15 +7,12 @@ type ColorFieldProps = {
 	onChange: (value: string) => void;
 };
 
-export function ColorField({
-	label,
-	value,
-	ariaLabel,
-	onChange,
-}: ColorFieldProps) {
+export function ColorField({ label, value, ariaLabel, onChange }: ColorFieldProps) {
+	const inputId = useId();
 	return (
 		<div>
 			<label
+				htmlFor={inputId}
 				style={{
 					display: "block",
 					fontSize: 14,
@@ -25,6 +22,7 @@ export function ColorField({
 				{label}
 			</label>
 			<input
+				id={inputId}
 				type="color"
 				value={value}
 				onChange={(event) => onChange(event.target.value)}
@@ -50,21 +48,22 @@ type RangeFieldProps = {
 	onChange: (value: number) => void;
 };
 
-export function RangeField({
-	label,
-	value,
-	min,
-	max,
-	step,
-	ariaLabel,
-	onChange,
-}: RangeFieldProps) {
+export function RangeField({ label, value, min, max, step, ariaLabel, onChange }: RangeFieldProps) {
+	const inputId = useId();
 	return (
 		<div>
-			<p style={{ marginBottom: 4 }}>
+			<label
+				htmlFor={inputId}
+				style={{
+					display: "block",
+					marginBottom: 4,
+					fontSize: 14,
+				}}
+			>
 				{label}: {value}px
-			</p>
+			</label>
 			<input
+				id={inputId}
 				type="range"
 				min={min}
 				max={max}
@@ -84,9 +83,11 @@ type BorderStyleSelectProps = {
 };
 
 export function BorderStyleSelect({ value, onChange }: BorderStyleSelectProps) {
+	const selectId = useId();
 	return (
 		<div>
 			<label
+				htmlFor={selectId}
 				style={{
 					display: "block",
 					fontSize: 14,
@@ -96,6 +97,7 @@ export function BorderStyleSelect({ value, onChange }: BorderStyleSelectProps) {
 				線のスタイル
 			</label>
 			<select
+				id={selectId}
 				value={value}
 				onChange={onChange}
 				aria-label="線のスタイル"

@@ -1,7 +1,6 @@
 "use client";
 
-import type { Dispatch, SetStateAction } from "react";
-import { presets } from "./presets";
+import { type Dispatch, type SetStateAction, useId } from "react";
 import {
 	BlankStyleSection,
 	ButtonStyleSection,
@@ -9,6 +8,7 @@ import {
 	NavTabStyleSection,
 	TextSizeSection,
 } from "./StyleSections";
+import { presets } from "./presets";
 import type { StyleSettings } from "./types";
 
 type Props = {
@@ -32,9 +32,9 @@ const titleStyle = {
 
 export function StyleSettingsPanel({ settings, setSettings }: Props) {
 	const selectedPreset =
-		Object.keys(presets).find(
-			(key) => JSON.stringify(presets[key]) === JSON.stringify(settings),
-		) ?? "custom";
+		Object.keys(presets).find((key) => JSON.stringify(presets[key]) === JSON.stringify(settings)) ??
+		"custom";
+	const presetSelectId = useId();
 
 	return (
 		<fieldset
@@ -49,8 +49,11 @@ export function StyleSettingsPanel({ settings, setSettings }: Props) {
 				<div style={headerStyle}>
 					<h2 style={titleStyle}>スタイル設定</h2>
 					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-						<label style={{ fontSize: 14 }}>プリセット:</label>
+						<label htmlFor={presetSelectId} style={{ fontSize: 14 }}>
+							プリセット:
+						</label>
 						<select
+							id={presetSelectId}
 							value={selectedPreset}
 							onChange={(event) => {
 								const presetName = event.target.value;

@@ -3,11 +3,7 @@
 import type { RefObject } from "react";
 import { paragraphToHtml } from "./parser";
 import type { Doc } from "./types";
-import {
-	checkSection,
-	resetSection,
-	showSectionAns,
-} from "./useQuizSectionHandlers";
+import { checkSection, resetSection, showSectionAns } from "./useQuizSectionHandlers";
 
 type Props = {
 	docs: Doc[];
@@ -50,14 +46,14 @@ export function PreviewView({
 					{docs.map((doc, i) => (
 						<button
 							key={doc.title}
+							type="button"
 							className={`nav-btn ${i === activePage ? "active" : ""}`}
 							onClick={() => setActivePage(i)}
 							style={{
 								marginRight: 8,
 								padding: "6px 12px",
 								borderRadius: 20,
-								border:
-									i === activePage ? "1px solid #2c3e50" : "1px solid #ccc",
+								border: i === activePage ? "1px solid #2c3e50" : "1px solid #ccc",
 								background: i === activePage ? "#2c3e50" : "#fff",
 								color: i === activePage ? "#fff" : "#555",
 							}}
@@ -92,18 +88,21 @@ export function PreviewView({
 									))}
 									<div className="section-controls">
 										<button
+											type="button"
 											className="btn-mini btn-check"
 											onClick={(e) => checkSection(e.currentTarget)}
 										>
 											このセクションを採点
 										</button>
 										<button
+											type="button"
 											className="btn-mini btn-ans"
 											onClick={(e) => showSectionAns(e.currentTarget)}
 										>
 											答えを見る
 										</button>
 										<button
+											type="button"
 											className="btn-mini btn-reset"
 											onClick={(e) => resetSection(e.currentTarget)}
 										>

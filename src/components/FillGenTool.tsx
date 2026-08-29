@@ -14,8 +14,6 @@ import { usePreviewSync } from "./useQuizSectionHandlers";
 import { useSelectionMenu } from "./useSelectionMenu";
 import { useUndoHistory } from "./useUndoHistory";
 
-const _baseStyle = generateStyle(presets.default);
-
 export default function FillGenTool() {
 	const [pages, setPages] = useState<string[]>([defaultInput]);
 	const [activePage, setActivePage] = useState(0);
@@ -29,22 +27,14 @@ export default function FillGenTool() {
 	const docs = useMemo(() => pages.map((p) => parseDoc(p)), [pages]);
 	const currentStyle = useMemo(() => generateStyle(settings), [settings]);
 	const htmlCode = useMemo(() => renderHtml(docs, settings), [docs, settings]);
-	const reactCode = useMemo(
-		() => renderReact(docs, settings),
-		[docs, settings],
-	);
+	const reactCode = useMemo(() => renderReact(docs, settings), [docs, settings]);
 
 	const { pushHistory } = useUndoHistory(textareaRef, setPages, [defaultInput]);
-	const {
-		menuPos,
-		isWrapping,
-		setSelectionRange,
-		openCaretMenu,
-		wrapSelectionAsBlank,
-	} = useSelectionMenu(textareaRef, menuRef, setPages, pushHistory, {
-		pages,
-		activePage,
-	});
+	const { menuPos, isWrapping, setSelectionRange, openCaretMenu, wrapSelectionAsBlank } =
+		useSelectionMenu(textareaRef, menuRef, setPages, pushHistory, {
+			pages,
+			activePage,
+		});
 
 	usePreviewSync(containerRef, docs, activePage, tab);
 
@@ -86,10 +76,7 @@ export default function FillGenTool() {
 			}}
 		>
 			<div style={{ maxWidth: 1180, margin: "0 auto" }}>
-				<nav
-					aria-label="Breadcrumb"
-					className="text-xs md:text-sm mb-4 mb-3"
-				>
+				<nav aria-label="Breadcrumb" className="text-xs md:text-sm mb-4 mb-3">
 					<ol className="flex items-baseline space-x-1 md:space-x-2 noto-sans-jp-light p-0 list-none m-0">
 						<li className="flex items-baseline">
 							<Link
@@ -127,8 +114,8 @@ export default function FillGenTool() {
 					穴埋めプリントジェネレーター
 				</h1>
 				<p style={{ color: "#666", marginBottom: 16 }}>
-					テキストに <code>{"{{答え|幅}}"}</code> を挿入して、プレビュー / HTML
-					/ React コードを即座に生成します.
+					テキストに <code>{"{{答え|幅}}"}</code> を挿入して、プレビュー / HTML / React
+					コードを即座に生成します.
 				</p>
 
 				<EditorPanel

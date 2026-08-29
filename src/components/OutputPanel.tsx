@@ -61,8 +61,7 @@ export function OutputPanel({
 								style={{
 									padding: "8px 16px",
 									border: "none",
-									borderBottom:
-										tab === key ? "2px solid #000" : "2px solid transparent",
+									borderBottom: tab === key ? "2px solid #000" : "2px solid transparent",
 									background: "none",
 									cursor: "pointer",
 									fontSize: "14px",
@@ -82,9 +81,7 @@ export function OutputPanel({
 									const title = docs[0]?.title ?? "quiz";
 									const sanitizedTitle = sanitizeFilename(title);
 									const filename =
-										tab === "html"
-											? `${sanitizedTitle}.html`
-											: `${sanitizedTitle}.tsx`;
+										tab === "html" ? `${sanitizedTitle}.html` : `${sanitizedTitle}.tsx`;
 									downloadFile(content, filename);
 								}}
 								style={{
@@ -98,9 +95,7 @@ export function OutputPanel({
 							<button
 								type="button"
 								onClick={async () => {
-									const ok = await copyText(
-										tab === "html" ? htmlCode : reactCode,
-									);
+									const ok = await copyText(tab === "html" ? htmlCode : reactCode);
 									alert(ok ? "コピーしました" : "コピー失敗");
 								}}
 								style={{

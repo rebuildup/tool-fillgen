@@ -35,9 +35,7 @@ export function getCaretScreenPosition(textarea: HTMLTextAreaElement) {
 	const fontSize = Number.parseFloat(style.fontSize || "16") || 16;
 	const rawLineHeight = Number.parseFloat(style.lineHeight || "0");
 	const lineHeight =
-		Number.isNaN(rawLineHeight) || rawLineHeight === 0
-			? fontSize * 1.2
-			: rawLineHeight;
+		Number.isNaN(rawLineHeight) || rawLineHeight === 0 ? fontSize * 1.2 : rawLineHeight;
 	const div = document.createElement("div");
 	Array.from(style).forEach((prop) => {
 		// @ts-expect-error dynamic access
@@ -64,10 +62,6 @@ export function getCaretScreenPosition(textarea: HTMLTextAreaElement) {
 
 	return {
 		left: taRect.left + (markerRect.left - divRect.left) - textarea.scrollLeft,
-		top:
-			taRect.top +
-			(markerRect.top - divRect.top) -
-			textarea.scrollTop +
-			lineHeight,
+		top: taRect.top + (markerRect.top - divRect.top) - textarea.scrollTop + lineHeight,
 	};
 }
