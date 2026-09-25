@@ -1,0 +1,84 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"include": [
+			"src/**",
+			"tests/**",
+			"*.ts",
+			"*.tsx",
+			"*.json",
+			"!package.json",
+			"!tsconfig.json",
+			"!biome.json",
+			"!vitest.config.ts"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"lineEnding": "lf"
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "warn",
+				"noConsole": { "level": "warn", "options": { "allow": ["warn", "error"] } },
+				"noArrayIndexKey": "off"
+			},
+			"style": {
+				"useImportType": "warn",
+				"useExportType": "warn",
+				"useNodejsImportProtocol": "error",
+				"useConst": "error",
+				"noNonNullAssertion": "warn"
+			},
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"useExhaustiveDependencies": "warn"
+			},
+			"complexity": {
+				"noBannedTypes": "error",
+				"noForEach": "off"
+			},
+			"performance": {
+				"noBarrelFile": "off"
+			},
+			"a11y": {
+				"noLabelWithoutControl": "error",
+				"useButtonType": "error"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"semicolons": "always",
+			"trailingCommas": "all",
+			"arrowParentheses": "always",
+			"jsxQuoteStyle": "double"
+		}
+	},
+	"json": {
+		"formatter": {
+			"indentWidth": 2,
+			"trailingCommas": "none"
+		}
+	}
+}

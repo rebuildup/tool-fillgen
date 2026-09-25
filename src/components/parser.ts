@@ -55,8 +55,7 @@ export function paragraphToHtml(text: string) {
 			.split("/")
 			.map((a: string) => a.trim())
 			.filter(Boolean);
-		const w =
-			width && width.trim() !== "" ? width.trim() : `${autoWidth(answers[0])}`;
+		const w = width && width.trim() !== "" ? width.trim() : `${autoWidth(answers[0])}`;
 		return `<input class="blank" data-ans="${answers.join("|")}" data-base-width="${w}" style="width:${w}px">`;
 	});
 }

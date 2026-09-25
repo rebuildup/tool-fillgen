@@ -8,9 +8,28 @@
 	"exports": {
 		".": "./src/index.ts"
 	},
+	"scripts": {
+		"check": "biome check --write --no-errors-on-unmatched",
+		"lint": "biome lint",
+		"format": "biome format --write",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"coverage": "vitest run --coverage",
+		"verify": "bun run check && bun run typecheck && bun run test"
+	},
 	"dependencies": {
 		"react": "^19.2.8",
 		"react-dom": "^19.2.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/react": "^19.2.0",
+		"@types/react-dom": "^19.2.0",
+		"@vitest/coverage-v8": "^2.1.8",
+		"happy-dom": "^15.11.7",
+		"typescript": "^5.7.2",
+		"vitest": "^2.1.8"
 	},
 	"peerDependencies": {
 		"next": "^16.3.0"

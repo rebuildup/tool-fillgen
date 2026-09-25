@@ -23,9 +23,7 @@ export function renderHtml(docs: Doc[], styleSettings: StyleSettings) {
 					if (b.header) arr.push(`<h3 class="main-header">${b.header}</h3>`);
 					arr.push(
 						...b.sections.map((sec) => {
-							const paras = sec.paragraphs
-								.map((p) => `<p>${paragraphToHtml(p)}</p>`)
-								.join("\n");
+							const paras = sec.paragraphs.map((p) => `<p>${paragraphToHtml(p)}</p>`).join("\n");
 							return `<div class="quiz-section">
  <h4>${sec.title}</h4>
  ${paras}
@@ -152,14 +150,10 @@ export function GeneratedQuiz({ title = "${docs[0]?.title ?? "Quiz"}" }) {
 		.map((doc, idx) => {
 			const blocks = doc.blocks
 				.map((b) => {
-					const header = b.header
-						? `<h3 className=\\"main-header\\">${b.header}</h3>`
-						: "";
+					const header = b.header ? `<h3 className=\\"main-header\\">${b.header}</h3>` : "";
 					const sections = b.sections
 						.map((sec) => {
-							const paras = sec.paragraphs
-								.map((p) => `<p>${paragraphToHtml(p)}</p>`)
-								.join("\\n");
+							const paras = sec.paragraphs.map((p) => `<p>${paragraphToHtml(p)}</p>`).join("\\n");
 							return `<div className=\\"quiz-section\\">
  <h4>${sec.title}</h4>
  ${paras}
