@@ -49,11 +49,17 @@ bun run coverage     # vitest run --coverage
 
 CI (`.github/workflows/ci.yml`) calls the same scripts. Do not duplicate validation logic between local and CI.
 
-## Branch / worktree policy
+## Branch / release workflow
 
-- Work on local `main` only.
-- No feature branches, no temporary branches, no Git worktrees unless explicitly requested by the user.
-- Subagents use worktree-free mechanisms.
+- `main` is released / integrated state.
+- current release integration line is `release-x-y-z`.
+- durable implementation work is tracked by GitHub Issue; ticket branch defaults to the Issue number only.
+- independent ticket PRs target the current release branch.
+- once the release branch has meaningful difference, maintain a Draft release PR from `release-x-y-z` to `main`.
+- normal integration into `main` comes only from the current release branch.
+- landing uses merge commits only; squash / rebase merge are not used.
+- worktrees are allowed when they improve isolation, but a worktree alone is not runtime-isolation proof.
+- concurrent workers must separate mutable runtime state when applicable.
 
 ## Design approval gate
 
@@ -66,7 +72,7 @@ This repo has no formal `docs/design/` yet. For non-trivial changes (new compone
 
 ## Skill discovery
 
-Project-local Skills live under `.claude/skills/`. Use the `Skill` tool to load them. The init policy at `docs/adr/0001-toolchain.md` documents which capabilities are delegated to Skills vs. native tools.
+Project-local operational Skills are installed into `.agents/skills/` and `.claude/skills/` through `bunx skills`. Use `mise run skills-bootstrap` on fresh setup and `mise run skills-update` for continuous updates. `skills-lock.json` is the durable source/content metadata.
 
 ## Mode / permission policy
 
@@ -97,3 +103,10 @@ Detailed workflows are in Agent Skills. Examples:
 - Fresh-clone audit steps
 
 Look up the relevant Skill before starting a non-trivial task.
+
+## Constitution / operating profile
+
+- Top-level contract: [`constitution/CONSTITUTION.md`](constitution/CONSTITUTION.md)
+- Current Operating Model: [`organization/profiles/release-driven-solo.md`](organization/profiles/release-driven-solo.md)
+- Existing React/Bun/Biome/Vitest/source-only-library decisions remain project-specific authority when they preserve the Constitution.
+- project-init operational Skills track current upstream through the project-local Skills CLI rather than a frozen governance revision.
