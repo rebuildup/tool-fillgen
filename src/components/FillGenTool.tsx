@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CaretMenu } from "./CaretMenu";
 import { EditorPanel } from "./EditorPanel";
@@ -13,8 +12,6 @@ import type { StyleSettings } from "./types";
 import { usePreviewSync } from "./useQuizSectionHandlers";
 import { useSelectionMenu } from "./useSelectionMenu";
 import { useUndoHistory } from "./useUndoHistory";
-
-const _baseStyle = generateStyle(presets.default);
 
 export default function FillGenTool() {
 	const [pages, setPages] = useState<string[]>([defaultInput]);
@@ -29,22 +26,14 @@ export default function FillGenTool() {
 	const docs = useMemo(() => pages.map((p) => parseDoc(p)), [pages]);
 	const currentStyle = useMemo(() => generateStyle(settings), [settings]);
 	const htmlCode = useMemo(() => renderHtml(docs, settings), [docs, settings]);
-	const reactCode = useMemo(
-		() => renderReact(docs, settings),
-		[docs, settings],
-	);
+	const reactCode = useMemo(() => renderReact(docs, settings), [docs, settings]);
 
 	const { pushHistory } = useUndoHistory(textareaRef, setPages, [defaultInput]);
-	const {
-		menuPos,
-		isWrapping,
-		setSelectionRange,
-		openCaretMenu,
-		wrapSelectionAsBlank,
-	} = useSelectionMenu(textareaRef, menuRef, setPages, pushHistory, {
-		pages,
-		activePage,
-	});
+	const { menuPos, isWrapping, setSelectionRange, openCaretMenu, wrapSelectionAsBlank } =
+		useSelectionMenu(textareaRef, menuRef, setPages, pushHistory, {
+			pages,
+			activePage,
+		});
 
 	usePreviewSync(containerRef, docs, activePage, tab);
 
@@ -86,27 +75,21 @@ export default function FillGenTool() {
 			}}
 		>
 			<div style={{ maxWidth: 1180, margin: "0 auto" }}>
-				<nav
-					aria-label="Breadcrumb"
-					className="text-xs md:text-sm mb-4 mb-3"
-				>
+				<nav aria-label="Breadcrumb" className="text-xs md:text-sm mb-4 mb-3">
+					{/*
+					 * The first two entries used to be links to the host routes
+					 * ("/" and "/tools"). Inside the embedding iframe those targets
+					 * are not the tool, so following them navigates the frame away
+					 * from the app. The breadcrumb keeps its shape and the current
+					 * page label, but the host routes are plain text.
+					 */}
 					<ol className="flex items-baseline space-x-1 md:space-x-2 noto-sans-jp-light p-0 list-none m-0">
 						<li className="flex items-baseline">
-							<Link
-								href="/"
-								className="transition-colors duration-200 hover:underline leading-none"
-							>
-								Home
-							</Link>
+							<span className="leading-none">Home</span>
 						</li>
 						<li className="flex items-baseline">
 							<span className="mx-2 select-none leading-none">/</span>
-							<Link
-								href="/tools"
-								className="transition-colors duration-200 hover:underline leading-none"
-							>
-								Tools
-							</Link>
+							<span className="leading-none">Tools</span>
 						</li>
 						<li className="flex items-baseline">
 							<span className="mx-2 select-none leading-none">/</span>
@@ -127,8 +110,8 @@ export default function FillGenTool() {
 					穴埋めプリントジェネレーター
 				</h1>
 				<p style={{ color: "#666", marginBottom: 16 }}>
-					テキストに <code>{"{{答え|幅}}"}</code> を挿入して、プレビュー / HTML
-					/ React コードを即座に生成します.
+					テキストに <code>{"{{答え|幅}}"}</code> を挿入して、プレビュー / HTML / React
+					コードを即座に生成します.
 				</p>
 
 				<EditorPanel

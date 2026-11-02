@@ -35,9 +35,7 @@ export function useSelectionMenu(
 	{ pages, activePage }: WrapDeps,
 ): SelectionMenuApi {
 	const [menuPos, setMenuPos] = useState<MenuPos | null>(null);
-	const [selectionRange, setSelectionRange] = useState<SelectionRange | null>(
-		null,
-	);
+	const [selectionRange, setSelectionRange] = useState<SelectionRange | null>(null);
 	const [isWrapping, setIsWrapping] = useState(false);
 
 	const openCaretMenu = useCallback(
@@ -209,7 +207,7 @@ export function useSelectionMenu(
 				ta2.setSelectionRange(currentPos, currentPos);
 			});
 		}
-	}, [pages, selectionRange, isWrapping, textareaRef]);
+	}, [selectionRange, isWrapping, textareaRef]);
 
 	useEffect(() => {
 		if (!menuPos || !selectionRange) return;
@@ -227,7 +225,7 @@ export function useSelectionMenu(
 	useEffect(() => {
 		if (!menuPos) return;
 		const handlePointerDown = (e: PointerEvent) => {
-			if (menuRef.current && menuRef.current.contains(e.target as Node)) {
+			if (menuRef.current?.contains(e.target as Node)) {
 				return;
 			}
 			setMenuPos(null);
@@ -247,11 +245,7 @@ export function useSelectionMenu(
 		const handlePointerUp = (e: PointerEvent) => {
 			if (isWrapping) return;
 			const { selectionStart, selectionEnd } = ta;
-			if (
-				selectionStart === null ||
-				selectionEnd === null ||
-				selectionStart === selectionEnd
-			) {
+			if (selectionStart === null || selectionEnd === null || selectionStart === selectionEnd) {
 				return;
 			}
 			setSelectionRange({ start: selectionStart, end: selectionEnd });
@@ -279,11 +273,7 @@ export function useSelectionMenu(
 			if (!ta) return;
 			if (document.activeElement !== ta) return;
 			const { selectionStart, selectionEnd } = ta;
-			if (
-				selectionStart === null ||
-				selectionEnd === null ||
-				selectionStart === selectionEnd
-			) {
+			if (selectionStart === null || selectionEnd === null || selectionStart === selectionEnd) {
 				return;
 			}
 			setSelectionRange({ start: selectionStart, end: selectionEnd });

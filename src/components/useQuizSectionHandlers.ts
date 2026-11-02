@@ -57,6 +57,7 @@ export function usePreviewSync(
 	activePage: number,
 	tab: string,
 ) {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: containerRef is a stable RefObject; effect reads containerRef.current
 	useEffect(() => {
 		const root = containerRef.current;
 		if (!root) return;
@@ -81,9 +82,7 @@ export function usePreviewSync(
 					e.preventDefault();
 					const sec = input.closest(".quiz-section");
 					if (!sec) return;
-					const arr = Array.from(
-						sec.querySelectorAll<HTMLInputElement>("input.blank"),
-					);
+					const arr = Array.from(sec.querySelectorAll<HTMLInputElement>("input.blank"));
 					const idx = arr.indexOf(input);
 					if (idx >= 0 && idx < arr.length - 1) arr[idx + 1].focus();
 				}
