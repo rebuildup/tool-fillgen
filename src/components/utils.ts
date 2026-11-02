@@ -1,9 +1,37 @@
+const copyWithExecCommand = (text: string): boolean => {
+	if (typeof document.execCommand !== "function") {
+		return false;
+	}
+
+	const textarea = document.createElement("textarea");
+	textarea.value = text;
+	textarea.setAttribute("readonly", "");
+	textarea.style.position = "fixed";
+	textarea.style.opacity = "0";
+	document.body.appendChild(textarea);
+	textarea.select();
+
+	let copied = false;
+	try {
+		copied = document.execCommand("copy");
+	} catch {
+		copied = false;
+	}
+	textarea.remove();
+	return copied;
+};
+
 export const copyText = async (text: string) => {
 	try {
 		await navigator.clipboard.writeText(text);
 		return true;
 	} catch {
-		return false;
+		// The async clipboard API is unavailable in an opaque-origin frame
+		// (a sandboxed iframe without `allow-same-origin`) and is blocked by
+		// the permissions policy in some embeddings. The deprecated
+		// `execCommand` path still works there, so the copy button keeps
+		// working instead of silently doing nothing.
+		return copyWithExecCommand(text);
 	}
 };
 
