@@ -28,7 +28,7 @@ describe("copyText", () => {
 });
 
 describe("copyText fallback", () => {
-	const documentWithExecCommand = document as Document & {
+	const documentWithExecCommand = document as unknown as {
 		execCommand?: (command: string) => boolean;
 	};
 
