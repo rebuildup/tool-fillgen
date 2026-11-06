@@ -87,12 +87,11 @@ export function ColorSettingsSection({ settings, setSettings }: SectionProps) {
 }
 
 export function TextSizeSection({ settings, setSettings }: SectionProps) {
-	const updateTextSize =
-		(key: keyof StyleSettings["textSize"]) => (value: number) =>
-			setSettings({
-				...settings,
-				textSize: { ...settings.textSize, [key]: value },
-			});
+	const updateTextSize = (key: keyof StyleSettings["textSize"]) => (value: number) =>
+		setSettings({
+			...settings,
+			textSize: { ...settings.textSize, [key]: value },
+		});
 
 	return (
 		<Section title="テキストサイズ">
@@ -146,12 +145,11 @@ export function TextSizeSection({ settings, setSettings }: SectionProps) {
 }
 
 export function ButtonStyleSection({ settings, setSettings }: SectionProps) {
-	const updateButton =
-		(key: keyof StyleSettings["button"]) => (value: number) =>
-			setSettings({
-				...settings,
-				button: { ...settings.button, [key]: value },
-			});
+	const updateButton = (key: keyof StyleSettings["button"]) => (value: number) =>
+		setSettings({
+			...settings,
+			button: { ...settings.button, [key]: value },
+		});
 
 	return (
 		<Section title="ボタンスタイル">
@@ -187,8 +185,7 @@ export function BlankStyleSection({ settings, setSettings }: SectionProps) {
 						...settings,
 						blank: {
 							...settings.blank,
-							borderStyle: event.target
-								.value as StyleSettings["blank"]["borderStyle"],
+							borderStyle: event.target.value as StyleSettings["blank"]["borderStyle"],
 						},
 					})
 				}
@@ -223,12 +220,11 @@ export function BlankStyleSection({ settings, setSettings }: SectionProps) {
 }
 
 export function NavTabStyleSection({ settings, setSettings }: SectionProps) {
-	const updateNavTab =
-		(key: keyof StyleSettings["navTab"]) => (value: number) =>
-			setSettings({
-				...settings,
-				navTab: { ...settings.navTab, [key]: value },
-			});
+	const updateNavTab = (key: keyof StyleSettings["navTab"]) => (value: number) =>
+		setSettings({
+			...settings,
+			navTab: { ...settings.navTab, [key]: value },
+		});
 
 	return (
 		<Section title="ページ切り替えタブスタイル">

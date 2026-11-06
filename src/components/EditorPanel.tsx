@@ -68,10 +68,7 @@ export function EditorPanel({
 								style={{
 									padding: "8px 16px",
 									border: "none",
-									borderBottom:
-										activePage === i
-											? "2px solid #000"
-											: "2px solid transparent",
+									borderBottom: activePage === i ? "2px solid #000" : "2px solid transparent",
 									background: "none",
 									cursor: "pointer",
 									fontSize: "14px",
@@ -120,15 +117,11 @@ export function EditorPanel({
 							return next;
 						})
 					}
-					onSelect={(e) => {
+					onSelect={() => {
 						// 穴埋め化処理中は選択範囲を更新しない
 						if (isWrapping) return;
 						const textarea = textareaRef.current;
-						if (
-							textarea &&
-							textarea.selectionStart !== null &&
-							textarea.selectionEnd !== null
-						) {
+						if (textarea && textarea.selectionStart !== null && textarea.selectionEnd !== null) {
 							setSelectionRange({
 								start: textarea.selectionStart,
 								end: textarea.selectionEnd,
@@ -139,11 +132,7 @@ export function EditorPanel({
 						// 穴埋め化処理中は選択範囲を更新しない
 						if (isWrapping) return;
 						const textarea = textareaRef.current;
-						if (
-							textarea &&
-							textarea.selectionStart !== null &&
-							textarea.selectionEnd !== null
-						) {
+						if (textarea && textarea.selectionStart !== null && textarea.selectionEnd !== null) {
 							const start = textarea.selectionStart;
 							const end = textarea.selectionEnd;
 							setSelectionRange({
@@ -172,15 +161,11 @@ export function EditorPanel({
 							}
 						}
 					}}
-					onKeyUp={(e) => {
+					onKeyUp={() => {
 						// 穴埋め化処理中は選択範囲を更新しない
 						if (isWrapping) return;
 						const textarea = textareaRef.current;
-						if (
-							textarea &&
-							textarea.selectionStart !== null &&
-							textarea.selectionEnd !== null
-						) {
+						if (textarea && textarea.selectionStart !== null && textarea.selectionEnd !== null) {
 							const start = textarea.selectionStart;
 							const end = textarea.selectionEnd;
 							setSelectionRange({
@@ -203,8 +188,7 @@ export function EditorPanel({
 					className="w-full font-mono text-sm p-2 border border-gray-300 rounded resize-y box-border"
 				/>
 				<p style={{ color: "#666", fontSize: 13 }}>
-					記法: <code>#</code> タイトル, <code>##</code> メイン見出し,{" "}
-					<code>###</code>
+					記法: <code>#</code> タイトル, <code>##</code> メイン見出し, <code>###</code>
 					セクション見出し, 空行で段落区切り.
 				</p>
 			</div>

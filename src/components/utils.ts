@@ -1,9 +1,37 @@
+const copyWithExecCommand = (text: string): boolean => {
+	if (typeof document.execCommand !== "function") {
+		return false;
+	}
+
+	const textarea = document.createElement("textarea");
+	textarea.value = text;
+	textarea.setAttribute("readonly", "");
+	textarea.style.position = "fixed";
+	textarea.style.opacity = "0";
+	document.body.appendChild(textarea);
+	textarea.select();
+
+	let copied = false;
+	try {
+		copied = document.execCommand("copy");
+	} catch {
+		copied = false;
+	}
+	textarea.remove();
+	return copied;
+};
+
 export const copyText = async (text: string) => {
 	try {
 		await navigator.clipboard.writeText(text);
 		return true;
 	} catch {
-		return false;
+		// The async clipboard API is unavailable in an opaque-origin frame
+		// (a sandboxed iframe without `allow-same-origin`) and is blocked by
+		// the permissions policy in some embeddings. The deprecated
+		// `execCommand` path still works there, so the copy button keeps
+		// working instead of silently doing nothing.
+		return copyWithExecCommand(text);
 	}
 };
 
@@ -35,9 +63,7 @@ export function getCaretScreenPosition(textarea: HTMLTextAreaElement) {
 	const fontSize = Number.parseFloat(style.fontSize || "16") || 16;
 	const rawLineHeight = Number.parseFloat(style.lineHeight || "0");
 	const lineHeight =
-		Number.isNaN(rawLineHeight) || rawLineHeight === 0
-			? fontSize * 1.2
-			: rawLineHeight;
+		Number.isNaN(rawLineHeight) || rawLineHeight === 0 ? fontSize * 1.2 : rawLineHeight;
 	const div = document.createElement("div");
 	Array.from(style).forEach((prop) => {
 		// @ts-expect-error dynamic access
@@ -64,10 +90,6 @@ export function getCaretScreenPosition(textarea: HTMLTextAreaElement) {
 
 	return {
 		left: taRect.left + (markerRect.left - divRect.left) - textarea.scrollLeft,
-		top:
-			taRect.top +
-			(markerRect.top - divRect.top) -
-			textarea.scrollTop +
-			lineHeight,
+		top: taRect.top + (markerRect.top - divRect.top) - textarea.scrollTop + lineHeight,
 	};
 }
